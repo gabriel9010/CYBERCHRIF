@@ -6,7 +6,7 @@
    ========================================= */
 
 /* ======== API CLIENT ======== */
-const API_BASE = "http://localhost:5000"; // es. "http://localhost:4000" oppure "" se stesso dominio/NGINX proxy
+const API_URL = 'http://localhost:5000/api'; // es. "http://localhost:4000" oppure "" se stesso dominio/NGINX proxy
 
 const API = {
   async get(path) {

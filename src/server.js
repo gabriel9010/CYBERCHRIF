@@ -58,11 +58,5 @@ app.listen(PORT, async () => {
   console.log(`📊 API Health: http://localhost:${PORT}/api/health`);
   console.log(`🌐 Frontend: http://localhost:${PORT}`);
   
-  // Apri automaticamente il browser
-  try {
-    await open(`http://localhost:${PORT}`);
-    console.log('🔓 Browser opened automatically!');
-  } catch (err) {
-    console.log('ℹ️ Open browser manually: http://localhost:' + PORT);
-  }
+
 });
