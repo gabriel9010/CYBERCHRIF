@@ -1,12 +1,10 @@
 {
   "name": "chrif-backend-mongo",
   "version": "1.0.0",
-  "description": "Backend completo per il portfolio CHRIF (Express + MongoDB Atlas + JWT + Upload + Email).",
-  "main": "src/server.js",
-  "type": "module",
+  "main": "server.js",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon src/server.js",
-    "start": "node src/server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -19,7 +17,8 @@
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.15",
     "mongoose": "^8.7.0",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "open": "^9.1.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.7"
