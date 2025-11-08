@@ -1,0 +1,18 @@
+{
+  "components\\Hero.jsx -> ./NeonGrid3D": {
+    "id": 1714,
+    "files": [
+      "static/chunks/b536a0f1.0f898456fa240614.js",
+      "static/chunks/914.4cd890667ef6919e.js",
+      "static/chunks/714.27f8563bbd0bf63a.js"
+    ]
+  },
+  "node_modules\\@react-three\\drei\\core\\Text.js -> troika-three-text": {
+    "id": null,
+    "files": []
+  },
+  "node_modules\\@react-three\\drei\\web\\FaceLandmarker.js -> @mediapipe/tasks-vision": {
+    "id": null,
+    "files": []
+  }
+}

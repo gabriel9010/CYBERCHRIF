@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+html, body { height: 100%; background: #0b0f17; color: #e6f1ff; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+.neon-border { position: relative; border: 1px solid rgba(0,246,255,.25);
+  box-shadow: 0 0 10px rgba(0,246,255,.35), inset 0 0 10px rgba(0,246,255,.12); border-radius: 12px; }
+.neon-border::after { content:""; position:absolute; inset:-1px; border-radius: inherit;
+  border:1px solid rgba(255,0,225,.18); filter:blur(10px); pointer-events:none; }
+
+.neon-border-anim { position: relative; }
+.neon-border-anim::before {
+  content:""; position:absolute; inset:0; border-radius: inherit; padding:1px;
+  background: conic-gradient(from 0deg, #ff00e1, #00f6ff, #8aff00, #ffe700, #ff00e1);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; filter: blur(6px); opacity:.5;
+  animation: spin 8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(1turn); } }
+
+.scanlines { background-image:
+  repeating-linear-gradient(to bottom, rgba(255,255,255,0.045), rgba(255,255,255,0.045) 1px, transparent 3px, transparent 5px);
+  mix-blend-mode: overlay; }
+
+.noise::after {
+  content:""; pointer-events:none; position:fixed; inset:0; z-index:50;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.03'/></svg>");
+}
+
+.crt { position: relative; }
+.crt::before {
+  content:""; position:absolute; inset:0; background: linear-gradient(transparent 0, rgba(0, 255, 255, 0.08) 2px, transparent 4px);
+  background-size: 100% 4px; mix-blend-mode: screen; pointer-events: none; border-radius: inherit;
+}
+
+.neon-text { color: #e6f1ff; text-shadow:
+  0 0 6px rgba(230,241,255,.6), 0 0 12px rgba(0,246,255,.7), 0 0 22px rgba(255,0,225,.45); }
+.neon-grad { background: linear-gradient(90deg,#ff00e1,#00f6ff,#8aff00,#ffe700); background-size: 200% 200%;
+  -webkit-background-clip: text; background-clip: text; color: transparent; animation: bg-pan 8s ease infinite; }
+
+.glitch {
+  position: relative; display: inline-block;
+  text-shadow: 0 0 8px rgba(0,246,255,.65), 0 0 16px rgba(255,0,225,.35);
+}
+.glitch::before, .glitch::after {
+  content: attr(data-text); position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: hidden;
+}
+.glitch::before { color: #ff00e1; transform: translate(2px,-1px); clip-path: polygon(0 2%, 100% 2%, 100% 42%, 0 45%); opacity:.8; }
+.glitch::after  { color: #00f6ff; transform: translate(-2px,1px); clip-path: polygon(0 55%, 100% 50%, 100% 90%, 0 100%); opacity:.8; }
+
+.btn-neon { @apply relative px-5 py-2 font-mono uppercase tracking-wider rounded-md border border-cyan-400 text-cyan-200;
+  transition: transform .25s ease, box-shadow .25s ease; }
+.btn-neon:hover { transform: translateY(-1px) scale(1.01); box-shadow: 0 0 12px rgba(0,246,255,.9), 0 0 38px rgba(255,0,225,.55); }
+.btn-neon::after {
+  content:""; position:absolute; inset:0; border-radius:inherit;
+  background: linear-gradient(90deg, rgba(255,0,225,.25), rgba(0,246,255,.25));
+  opacity: 0; transition: opacity .25s ease;
+}
+.btn-neon:hover::after { opacity: 1; }
+
+.link-neon { position: relative; }
+.link-neon::after {
+  content:""; position:absolute; left:0; right:0; bottom:-2px; height:2px;
+  background: linear-gradient(90deg, #ff00e1, #00f6ff); box-shadow: 0 0 10px rgba(0,246,255,.8);
+  transform: scaleX(0); transform-origin: left; transition: transform .25s ease;
+}
+.link-neon:hover::after { transform: scaleX(1); }
+
+.cursor-neon { cursor: crosshair; }
+/* --- Cyberpunk 2077 vibes extra --- */
+
+.animate-bg-pan { animation: bg-pan 10s ease infinite; }
+
+.chip-holo {
+  position: relative; display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(0,246,255,.25);
+  background: linear-gradient(90deg, rgba(0,246,255,.12), rgba(255,0,225,.10));
+  box-shadow: inset 0 0 10px rgba(0,246,255,.15), 0 0 8px rgba(255,0,225,.15);
+  backdrop-filter: blur(3px);
+}
+.chip-holo::before {
+  content:""; position:absolute; inset:0; border-radius: inherit; padding:1px;
+  background: conic-gradient(from 0deg, rgba(255,0,225,.35), rgba(0,246,255,.35), rgba(138,255,0,.35), rgba(255,231,0,.35), rgba(255,0,225,.35));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
+  opacity:.35; filter: blur(6px);
+}
+
+.neon-text { color: #e6f1ff; text-shadow:
+  0 0 6px rgba(230,241,255,.6), 0 0 12px rgba(0,246,255,.7), 0 0 22px rgba(255,0,225,.45); }
+
+.neon-grad { background: linear-gradient(90deg,#ff00e1,#00f6ff,#8aff00,#ffe700); background-size: 200% 200%;
+  -webkit-background-clip: text; background-clip: text; color: transparent; animation: bg-pan 8s ease infinite; }
+
+@keyframes bg-pan {
+  0% { background-position: 0% 50% }
+  50% { background-position: 100% 50% }
+  100% { background-position: 0% 50% }
+}
+
+@keyframes flicker {
+  0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% { opacity: 1 }
+  20%, 21.999%, 63%, 63.999%, 65%, 69.999% { opacity: .4 }
+}
+.animate-flicker { animation: flicker 3s infinite; }
+
+@keyframes scan {
+  0% { transform: translateY(-100%) }
+  100% { transform: translateY(100%) }
+}
+.animate-scan { animation: scan 4s linear infinite; }
+/* caret blink per Typewriter */
+@keyframes caret { 0%, 49% {opacity:1} 50%,100% {opacity:0} }
+.after\:animate-caret::after { animation: caret 1s steps(1) infinite; }
+
+/* progress bar anim */
+@keyframes meter { 0% {filter:hue-rotate(0deg)} 100% {filter:hue-rotate(360deg)} }
+.animate-meter { animation: meter 6s linear infinite; }
+/* Safe-area iOS */
+.container { padding-left: max(1rem, env(safe-area-inset-left)); padding-right: max(1rem, env(safe-area-inset-right)); }
+body { padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
+
+/* Miglior tap su mobile */
+button, a, input, textarea { -webkit-tap-highlight-color: transparent; }
+
+/* Riduci intensità effetti su schermi stretti */
+@media (max-width: 640px) {
+  .scanlines { opacity: .35; }
+  .neon-border::after { filter: blur(6px); }
+}

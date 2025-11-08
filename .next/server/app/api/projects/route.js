@@ -1,0 +1,30 @@
+"use strict";(()=>{var e={};e.id=871,e.ids=[871],e.modules={7476:e=>{e.exports=require("@libsql/client")},5890:e=>{e.exports=require("better-sqlite3")},2934:e=>{e.exports=require("next/dist/client/components/action-async-storage.external.js")},4580:e=>{e.exports=require("next/dist/client/components/request-async-storage.external.js")},5869:e=>{e.exports=require("next/dist/client/components/static-generation-async-storage.external.js")},399:e=>{e.exports=require("next/dist/compiled/next-server/app-page.runtime.prod.js")},517:e=>{e.exports=require("next/dist/compiled/next-server/app-route.runtime.prod.js")},7147:e=>{e.exports=require("fs")},1017:e=>{e.exports=require("path")},3945:(e,t,r)=>{r.r(t),r.d(t,{originalPathname:()=>j,patchFetch:()=>R,requestAsyncStorage:()=>N,routeModule:()=>m,serverHooks:()=>f,staticGenerationAsyncStorage:()=>L});var s={};r.r(s),r.d(s,{GET:()=>g,POST:()=>E,dynamic:()=>d,revalidate:()=>T});var i=r(9303),a=r(8716),o=r(670),n=r(7070),c=r(4191),p=r(7410),l=r(1615);let u=p.z.object({slug:p.z.string().min(2),title:p.z.string().min(2),description:p.z.string().min(2),tags:p.z.array(p.z.string()).default([]),accent:p.z.string().default("#00f6ff"),repo:p.z.string().url().optional().or(p.z.literal("")),demo:p.z.string().url().optional().or(p.z.literal("")),icon:p.z.string().default("globe"),image:p.z.string().optional().default("")}),d="force-dynamic",T=0;async function g(){let e=await c.db.all();return n.NextResponse.json({projects:e})}async function E(e){if(l.cookies().get("admin")?.value!=="1")return n.NextResponse.json({error:"Unauthorized"},{status:401});let t=await e.json(),r=u.safeParse(t);if(!r.success)return n.NextResponse.json({error:r.error.flatten()},{status:400});try{return await c.db.insert(r.data),n.NextResponse.json({ok:!0})}catch(e){return n.NextResponse.json({error:e.message},{status:500})}}let m=new i.AppRouteRouteModule({definition:{kind:a.x.APP_ROUTE,page:"/api/projects/route",pathname:"/api/projects",filename:"route",bundlePath:"app/api/projects/route"},resolvedPagePath:"C:\\Users\\gabri\\Downloads\\chrif-portfolio\\app\\api\\projects\\route.js",nextConfigOutput:"",userland:s}),{requestAsyncStorage:N,staticGenerationAsyncStorage:L,serverHooks:f}=m,j="/api/projects/route";function R(){return(0,o.patchFetch)({serverHooks:f,staticGenerationAsyncStorage:L})}},4191:(e,t,r)=>{let s;r.d(t,{db:()=>l});var i=r(1017),a=r.n(i),o=r(7147),n=r.n(o);let c=process.env.LIBSQL_URL?"libsql":"sqlite",p=(async()=>{if("sqlite"===c){let{default:e}=await Promise.resolve().then(r.t.bind(r,5890,23)),t=a().join(process.cwd(),"db","projects.db"),i=a().dirname(t);n().existsSync(i)||n().mkdirSync(i,{recursive:!0});let o=new e(t);if(o.pragma("journal_mode = WAL"),o.exec(`
+      CREATE TABLE IF NOT EXISTS projects (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        slug TEXT UNIQUE NOT NULL,
+        title TEXT NOT NULL,
+        description TEXT NOT NULL,
+        tags TEXT NOT NULL,
+        accent TEXT NOT NULL,
+        repo TEXT,
+        demo TEXT,
+        icon TEXT DEFAULT 'globe',
+        image TEXT DEFAULT ''
+      );
+    `),0===o.prepare("SELECT COUNT(*) AS c FROM projects").get().c){let e=o.prepare(`INSERT INTO projects (slug,title,description,tags,accent,repo,demo,icon,image)
+        VALUES (@slug,@title,@description,@tags,@accent,@repo,@demo,@icon,@image)`);[{slug:"api-gateway",title:"API Gateway",description:"Reverse proxy Node.js con rate limit, cache e JWT.",tags:["Node.js","Fastify","Redis","JWT"],accent:"#00f6ff",repo:"https://github.com/chrif/api-gateway",demo:"",icon:"shield",image:""},{slug:"realtime-dashboard",title:"Realtime Dashboard",description:"Dashboard realtime con websockets e grafici.",tags:["Next.js","Socket.io","Tailwind"],accent:"#ff00e1",repo:"https://github.com/chrif/realtime-dashboard",demo:"",icon:"cpu",image:""}].forEach(t=>e.run({...t,tags:JSON.stringify(t.tags)}))}s=o}else{let{createClient:e}=await Promise.resolve().then(r.t.bind(r,7476,23)),t=e({url:process.env.LIBSQL_URL,authToken:process.env.LIBSQL_AUTH_TOKEN});await t.execute(`
+      CREATE TABLE IF NOT EXISTS projects (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        slug TEXT UNIQUE NOT NULL,
+        title TEXT NOT NULL,
+        description TEXT NOT NULL,
+        tags TEXT NOT NULL,
+        accent TEXT NOT NULL,
+        repo TEXT,
+        demo TEXT,
+        icon TEXT DEFAULT 'globe',
+        image TEXT DEFAULT ''
+      );
+    `),s=t}})(),l={mode:c,async all(){if(await p,"sqlite"===c)return s.prepare("SELECT * FROM projects ORDER BY id DESC").all().map(e=>({...e,tags:JSON.parse(e.tags)}));{let{rows:e}=await s.execute("SELECT * FROM projects ORDER BY id DESC");return e.map(e=>({...e,id:Number(e.id),tags:JSON.parse(e.tags)}))}},async insert(e){await p,"sqlite"===c?s.prepare(`INSERT INTO projects (slug,title,description,tags,accent,repo,demo,icon,image)
+         VALUES (@slug,@title,@description,@tags,@accent,@repo,@demo,@icon,@image)`).run({...e,tags:JSON.stringify(e.tags??[])}):await s.execute({sql:`INSERT INTO projects (slug,title,description,tags,accent,repo,demo,icon,image)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,args:[e.slug,e.title,e.description,JSON.stringify(e.tags??[]),e.accent,e.repo??"",e.demo??"",e.icon??"globe",e.image??""]})},async update(e,t){await p;let r=[],i=[];for(let[e,s]of Object.entries(t))"tags"===e?(r.push("tags=?"),i.push(JSON.stringify(s))):(r.push(`${e}=?`),i.push(s));r.length&&("sqlite"===c?(i.push(e),s.prepare(`UPDATE projects SET ${r.join(",")} WHERE id=?`).run(...i)):(i.push(e),await s.execute({sql:`UPDATE projects SET ${r.join(",")} WHERE id=?`,args:i})))},async delete(e){await p,"sqlite"===c?s.prepare("DELETE FROM projects WHERE id=?").run(e):await s.execute({sql:"DELETE FROM projects WHERE id=?",args:[e]})}}}};var t=require("../../../webpack-runtime.js");t.C(e);var r=e=>t(t.s=e),s=t.X(0,[948,972,608],()=>r(3945));module.exports=s})();
